@@ -26,7 +26,7 @@ wss.on("connection", (socket) => {
   console.log("Joueurs connectés :", players.map(p => p.id));
 
   socket.send(JSON.stringify({
-    type: "welcome",
+    type: "players",
     id: player.id
   }));
 
@@ -42,6 +42,7 @@ wss.on("connection", (socket) => {
 });
 
 console.log("WebSocket Server attaché !");
+
 
 
 
