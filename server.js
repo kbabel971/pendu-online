@@ -23,6 +23,8 @@ wss.on("connection", (socket) => {
 
   players.push(player);
   console.log("Nouveau joueur connecté :", player.id);
+  console.log("Nouveau joueur connecté :", player.id);
+  console.log("Joueurs connectés :", players.map(p => p.id));
 
   socket.send(JSON.stringify({
     type: "welcome",
@@ -35,10 +37,13 @@ wss.on("connection", (socket) => {
 
   socket.on("close", () => {
     console.log("Déconnexion du joueur :", player.id);
+    console.log("Déconnexion du joueur :", player.id);
+    console.log("Joueurs connectés :", players.map(p => p.id));
     players = players.filter(p => p.id !== player.id);
   });
 });
 
 console.log("WebSocket Server attaché !");
+
 
 
