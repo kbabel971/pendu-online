@@ -1,7 +1,7 @@
 import http from "http";
 import { WebSocketServer } from "ws";
 
-const PORT = 8080;
+const PORT = process.env.PORT || 8080;
 
 // Serveur HTTP obligatoire pour Render
 const server = http.createServer();
@@ -42,6 +42,7 @@ wss.on("connection", (socket) => {
 });
 
 console.log("WebSocket Server attaché !");
+
 
 
 
