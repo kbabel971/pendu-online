@@ -51,15 +51,14 @@ function broadcastWord() {
 }
 
 wss.on("connection", (socket) => {
-    socket.send(JSON.stringify({
-    type: "current_id",
-    id: currentID
-}));
   const player = {
     id: nextId++,
     socket: socket
   };
-
+ socket.send(JSON.stringify({
+    type: "current_id",
+    id: currentID
+}));
   players.push(player);
   currentID++;
   console.log("Nouveau joueur :", player.id);
@@ -109,6 +108,7 @@ wss.on("connection", (socket) => {
 });
 
 console.log("WebSocket Server attaché !");
+
 
 
 
