@@ -33,11 +33,6 @@ let players = [];
 let nextId = 1;
 let currentID = 0;
 
-  socket.send(JSON.stringify({
-    type: "current_id",
-    id: currentId
-}));
-
 function broadcastPlayers() {
   const ids = players.map(p => p.id);
   const msg = JSON.stringify({
@@ -56,6 +51,10 @@ function broadcastWord() {
 }
 
 wss.on("connection", (socket) => {
+    socket.send(JSON.stringify({
+    type: "current_id",
+    id: currentID
+}));
   const player = {
     id: nextId++,
     socket: socket
@@ -109,6 +108,7 @@ wss.on("connection", (socket) => {
 });
 
 console.log("WebSocket Server attaché !");
+
 
 
 
