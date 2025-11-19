@@ -101,13 +101,14 @@ wss.on("connection", (socket) => {
   });
 
   socket.on("close", () => {
-    console.log("Déconnexion :", player.id);
-    players = players.filter(p => p.id !== player.id);
-    broadcastPlayers();
+  //  console.log("Déconnexion :", player.id);
+  //  players = players.filter(p => p.id !== player.id);
+   // broadcastPlayers();
   });
 });
 
 console.log("WebSocket Server attaché !");
+
 
 
 
