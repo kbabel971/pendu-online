@@ -1,7 +1,11 @@
 import http from "http";
+import fs from "fs";
+
 import { WebSocketServer } from "ws";
 
 const PORT = process.env.PORT || 8080;
+
+let words = [];
 
 // Serveur HTTP pour Render
 const server = http.createServer();
@@ -43,6 +47,29 @@ wss.on("connection", (socket) => {
     console.log(`Message du joueur ${player.id} :`, msg.toString());
   });
 
+  try {
+  const data = fs.readFileSync("WordList.txt", "utf8");
+  words = data.split(/\r?\n/).filter(w => w.trim().length > 0);
+  console.log("Nombre de mots chargés :", words.length);
+} catch (err) {
+  console.error("Erreur lecture mots.txt :", err);
+}
+
+  function getRandomWord() {
+  return words[Math.floor(Math.random() * words.length)];
+}
+
+  function broadcastWord() {
+  const mot = getRandomWord();
+
+  const msg = JSON.stringify({
+    type: "word",
+    word: mot
+  });
+
+  players.forEach(p => p.socket.send(msg));
+}
+
   socket.on("close", () => {
     console.log("Déconnexion du joueur :", player.id);
 
@@ -52,6 +79,7 @@ wss.on("connection", (socket) => {
 });
 
 console.log("WebSocket Server attaché !");
+
 
 
 
