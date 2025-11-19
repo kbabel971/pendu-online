@@ -31,6 +31,7 @@ const wss = new WebSocketServer({ server });
 
 let players = [];
 let nextId = 1;
+let currentID = 0;
 
 function broadcastPlayers() {
   const ids = players.map(p => p.id);
@@ -58,6 +59,11 @@ wss.on("connection", (socket) => {
   players.push(player);
   console.log("Nouveau joueur :", player.id);
 
+  socket.send(JSON.stringify({
+    type: "current_id",
+    id: currentId
+}));
+  
   broadcastPlayers();
 
   //Génère le mot si ce n'est pas déjà fait
@@ -103,6 +109,7 @@ wss.on("connection", (socket) => {
 });
 
 console.log("WebSocket Server attaché !");
+
 
 
 
