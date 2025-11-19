@@ -3,17 +3,29 @@ import { WebSocketServer } from "ws";
 
 const PORT = process.env.PORT || 8080;
 
-// Serveur HTTP obligatoire pour Render
+// Serveur HTTP pour Render
 const server = http.createServer();
 server.listen(PORT, () => {
   console.log("HTTP server running on port", PORT);
 });
 
-// Attache WebSocket sur le serveur HTTP
+// WebSocket attaché
 const wss = new WebSocketServer({ server });
 
 let players = [];
 let nextId = 1;
+
+// Envoie la liste des joueurs à tout le monde
+function broadcastPlayers() {
+  const ids = players.map(p => p.id);
+
+  const msg = JSON.stringify({
+    type: "players",
+    players: ids
+  });
+
+  players.forEach(p => p.socket.send(msg));
+}
 
 wss.on("connection", (socket) => {
   const player = {
@@ -23,12 +35,9 @@ wss.on("connection", (socket) => {
 
   players.push(player);
   console.log("Nouveau joueur connecté :", player.id);
-  console.log("Joueurs connectés :", players.map(p => p.id));
 
-  socket.send(JSON.stringify({
-    type: "players",
-    id: player.id
-  }));
+  // Met à jour tout le monde
+  broadcastPlayers();
 
   socket.on("message", (msg) => {
     console.log(`Message du joueur ${player.id} :`, msg.toString());
@@ -36,8 +45,9 @@ wss.on("connection", (socket) => {
 
   socket.on("close", () => {
     console.log("Déconnexion du joueur :", player.id);
-    console.log("Joueurs connectés :", players.map(p => p.id));
+
     players = players.filter(p => p.id !== player.id);
+    broadcastPlayers();
   });
 });
 
