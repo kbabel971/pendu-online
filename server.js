@@ -74,6 +74,25 @@ wss.on("connection", (socket) => {
 
   socket.on("message", (msg) => {
     console.log(`Message du joueur ${player.id} :`, msg.toString());
+
+    const data = JSON.parse(msg.toString());
+
+    if (data.type === "letter") {
+        console.log(`Joueur ${player.id} a envoyé la lettre : ${data.letter}`);
+
+        // Vérifie si la lettre est dans le mot
+        let isCorrect = currentWord.includes(data.letter);
+
+        // Envoie la lettre à tous les joueurs
+        const response = JSON.stringify({
+            type: "letter_result",
+            player: player.id,
+            letter: data.letter,
+            correct: isCorrect
+        });
+
+        players.forEach(p => p.socket.send(response));
+    }
   });
 
   socket.on("close", () => {
@@ -84,6 +103,7 @@ wss.on("connection", (socket) => {
 });
 
 console.log("WebSocket Server attaché !");
+
 
 
 
