@@ -61,6 +61,7 @@ wss.on("connection", (socket) => {
   };
 
   players.push(player);
+  currentID++;
   console.log("Nouveau joueur :", player.id);
   
   broadcastPlayers();
@@ -108,6 +109,7 @@ wss.on("connection", (socket) => {
 });
 
 console.log("WebSocket Server attaché !");
+
 
 
 
