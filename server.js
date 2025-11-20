@@ -123,7 +123,6 @@ function LetterIsInWord(playerLetter)
   
   for(let i = 1 ; i < currentWordChar.length ; i++)
   {
-    console.log(currentWordChar[i]);
     if(playerLetter.toUpperCase() === currentWordChar[i].toUpperCase())
     {
       actuallyWordChar[i] = playerLetter.toUpperCase();
@@ -145,7 +144,7 @@ function Win()
 {
   for(let i = 0; i < actuallyWordChar.length; i++)
   {
-   // console.log(actuallyWordChar[i]);
+    console.log(actuallyWordChar[i]);
   }
   if (!actuallyWordChar.includes('_')) 
   {
@@ -287,6 +286,7 @@ playerTurn++;
 });
 
 console.log("WebSocket Server attaché !");
+
 
 
 
