@@ -149,6 +149,7 @@ function Win()
   {
     const msg = JSON.stringify({
     type: "verif_win",
+    win : win
 });
 
    players.forEach(p => p.socket.send(msg));
@@ -280,6 +281,7 @@ playerTurn++;
 });
 
 console.log("WebSocket Server attaché !");
+
 
 
 
