@@ -208,11 +208,11 @@ playerTurn++;
   // Diffuse le tour courant à tous
   broadcastPlayerTurn();
 }
-    if (data.type === "actually_Word_Char") {
+   // if (data.type === "actually_Word_Char") {
         // data.actuallyWordChar est une string
-        const wordCharArray = data.actuallyWordChar.split(''); // transforme en tableau de caractères
-        console.log("Mot reçu sous forme de tableau de lettres :", wordCharArray);
-    });
+       // const wordCharArray = data.actuallyWordChar.split(''); // transforme en tableau de caractères
+      //  console.log("Mot reçu sous forme de tableau de lettres :", wordCharArray);
+   // });
 }
 
   socket.on("close", () => {
@@ -241,6 +241,7 @@ playerTurn++;
 });
 
 console.log("WebSocket Server attaché !");
+
 
 
 
