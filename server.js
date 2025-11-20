@@ -110,8 +110,21 @@ function Lose()
 });
     players.forEach(p => p.socket.send(msg));
   }
+}
 
-  
+let win = false;
+let currentWordChar = [];
+let actuallyWordChar = [];
+
+function Win()
+{
+  currentWordChar = currentWord.split('');
+  let nbLetterFind;
+
+  for(let i = 0; i < currentWordChar.length ; i++)
+  {
+    
+  }
 }
 
 wss.on("connection", (socket) => {
@@ -195,6 +208,10 @@ playerTurn++;
   // Diffuse le tour courant à tous
   broadcastPlayerTurn();
 }
+    if (data.type === "actually_Word_Char") {
+        // data.actuallyWordChar est une string
+        const wordCharArray = data.actuallyWordChar.split(''); // transforme en tableau de caractères
+        console.log("Mot reçu sous forme de tableau de lettres :", wordCharArray);
     });
 
   socket.on("close", () => {
@@ -223,6 +240,7 @@ playerTurn++;
 });
 
 console.log("WebSocket Server attaché !");
+
 
 
 
