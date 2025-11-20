@@ -119,7 +119,8 @@ let currentWordChar = [];
 
 function LetterIsInWord(playerLetter)
 {
-    console.log("lettre correcte");
+    currentWordChar = currentWord.split('');
+  
   for(let i = 1 ; i < currentWordChar.length ; i++)
   {
     console.log(currentWordChar[i]);
@@ -286,6 +287,7 @@ playerTurn++;
 });
 
 console.log("WebSocket Server attaché !");
+
 
 
 
