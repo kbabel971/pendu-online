@@ -32,6 +32,7 @@ const wss = new WebSocketServer({ server });
 let players = [];
 let nextId = 1;
 let currentID = 0;
+let playerTurn = 1;
 
 function broadcastPlayers() {
   const ids = players.map(p => p.id);
@@ -50,6 +51,15 @@ function broadcastWord() {
   players.forEach(p => p.socket.send(msg));
 }
 
+function broadcastPlayerTurn() {
+    const msg = JSON.stringify({
+        type: "player_turn",
+        turn: playerTurn
+    });
+
+    players.forEach(p => p.socket.send(msg));
+}
+
 wss.on("connection", (socket) => {
   const player = {
     id: nextId++,
@@ -64,7 +74,7 @@ wss.on("connection", (socket) => {
   console.log("Nouveau joueur :", player.id);
   
   broadcastPlayers();
-
+  broadcastPlayerTurn();
   //Génère le mot si ce n'est pas déjà fait
   if (!currentWord) {
     currentWord = getRandomWord();
@@ -97,8 +107,16 @@ wss.on("connection", (socket) => {
         });
 
         players.forEach(p => p.socket.send(response));
+
+      if(playerTurn > 2)
+      { playerTurn = 1;
     }
-  });
+      else
+      { playerTurn++;
+       
+  }
+      broadcastPlayerTurn();
+      );
 
   socket.on("close", () => {
   //  console.log("Déconnexion :", player.id);
@@ -108,6 +126,7 @@ wss.on("connection", (socket) => {
 });
 
 console.log("WebSocket Server attaché !");
+
 
 
 
