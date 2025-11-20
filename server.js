@@ -155,8 +155,6 @@ function Win()
    players.forEach(p => p.socket.send(msg));
 }
   }
-  
-}
 
 wss.on("connection", (socket) => {
    // CRÉATION DU JOUEUR AVEC UN ID BASÉ SUR LA LISTE
@@ -281,6 +279,7 @@ playerTurn++;
 });
 
 console.log("WebSocket Server attaché !");
+
 
 
 
