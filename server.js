@@ -180,6 +180,7 @@ playerTurn++;
     if(players.length === 0)
     {
       playerTurn = 1;
+      wrongLetter.length = 0;
     }
 
    // 2. RÉINDEXATION DES JOUEURS RESTANTS
@@ -195,6 +196,7 @@ playerTurn++;
 });
 
 console.log("WebSocket Server attaché !");
+
 
 
 
