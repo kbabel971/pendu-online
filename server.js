@@ -104,7 +104,14 @@ function Lose()
   if(life === 0)
   {
     lose = true;
+    const msg = JSON.stringify({
+    type: "lose",
+    lose: lose
+});
+    players.forEach(p => p.socket.send(msg));
   }
+
+  
 }
 
 wss.on("connection", (socket) => {
@@ -219,6 +226,7 @@ playerTurn++;
 });
 
 console.log("WebSocket Server attaché !");
+
 
 
 
