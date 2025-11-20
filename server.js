@@ -19,6 +19,7 @@ function getRandomWord() {
 }
 
 let currentWord = null;  // <<< mot global partagé par tous
+let actuallyWordChar = [];
 
 // Serveur HTTP Render
 const server = http.createServer();
@@ -70,7 +71,8 @@ function broadcastPlayers() {
 function broadcastWord() {
   const msg = JSON.stringify({
     type: "word",
-    word: currentWord
+    word: currentWord,
+    actuWordChar: actuallyWordChar
   });
   players.forEach(p => p.socket.send(msg));
 }
@@ -114,7 +116,26 @@ function Lose()
 
 let win = false;
 let currentWordChar = [];
-let actuallyWordChar = [];
+
+function LetterIsInWord(playerLetter)
+{
+  for(let i = 1 ; i < currentWordChar.length ; i++)
+  {
+    if(playerLetter.toUpperCase() === currentWordChar[i])
+    {
+      actuallyWordChar[i] = playerLetter.toUpperCase();
+    }
+  }
+}
+
+function broadCastVerifWin()
+{
+  const msg = JSON.stringify({
+    type: "verif_win",
+});
+
+players.forEach(p => p.socket.send(msg));
+}
 
 //function Win()
 //{
@@ -147,6 +168,8 @@ wss.on("connection", (socket) => {
   //Génère le mot si ce n'est pas déjà fait
   if (!currentWord) {
     currentWord = getRandomWord();
+    actuallyWordChar = Array(currentWord.length).fill('_');
+    actuallyWordChar[0] = currentWord[0]; // première lettre toujours affichée
     console.log("Mot choisi :", currentWord);
   }
 
@@ -173,6 +196,11 @@ wss.on("connection", (socket) => {
   // Vérifie si la lettre est dans le mot
   const isCorrect = currentWord.includes(data.letter);
 
+    if(isCorrect)
+    {
+      LetterIsInWord(data.letter);
+    }
+
   // Envoie le résultat de la lettre à tous les joueurs
   const response = JSON.stringify({
     type: "letter_result",
@@ -196,6 +224,7 @@ wss.on("connection", (socket) => {
       life--;
     }
 
+    broadCastVerifWin();
      // verifie si le jeu est terminer par une defaite
     Lose();
 
@@ -241,5 +270,6 @@ playerTurn++;
 });
 
 console.log("WebSocket Server attaché !");
+
 
 
