@@ -134,6 +134,7 @@ playerTurn++;
     // 2. On réindexe correctement les joueurs restants
     players = players.map((p, index) => {
         p.id = index + 1; // recommence à 1
+      console.log("player id :", p.id);
         return p;
     });
 
@@ -145,6 +146,7 @@ playerTurn++;
 });
 
 console.log("WebSocket Server attaché !");
+
 
 
 
