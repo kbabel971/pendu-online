@@ -211,6 +211,7 @@ wss.on("connection", (socket) => {
 
     if(isCorrect)
     {
+      console.log("lettre correcte");
       LetterIsInWord(data.letter);
     }
 
@@ -284,6 +285,7 @@ playerTurn++;
 });
 
 console.log("WebSocket Server attaché !");
+
 
 
 
