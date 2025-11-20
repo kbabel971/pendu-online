@@ -154,8 +154,12 @@ wss.on("connection", (socket) => {
 
     if(isCorrect === false)
     {
-      wrongLetter.push(data.letter);
-      broadCastWrongLetter();
+      if(!wrongLetter.includes(data.letter))
+      {
+        wrongLetter.push(data.letter);
+         broadCastWrongLetter();
+      }
+
       broadCastImageLife();
       currentIndexImageLife++;
     }
@@ -196,6 +200,7 @@ playerTurn++;
 });
 
 console.log("WebSocket Server attaché !");
+
 
 
 
