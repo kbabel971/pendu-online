@@ -140,6 +140,10 @@ players.forEach(p => p.socket.send(msg));
 
 function Win()
 {
+  for(let i = 0; i < actuallyWordChar.length; i++)
+  {
+    console.log(actuallyWordChar[i]);
+  }
   if (!actuallyWordChar.includes('_')) 
   {
         win = true;
@@ -279,6 +283,7 @@ playerTurn++;
 });
 
 console.log("WebSocket Server attaché !");
+
 
 
 
