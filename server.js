@@ -107,16 +107,13 @@ wss.on("connection", (socket) => {
         });
 
         players.forEach(p => p.socket.send(response));
-
+       playerTurn++;
       if(playerTurn > 2)
       { playerTurn = 1;
     }
-      else
-      { playerTurn++;
-       
-  }
+
       broadcastPlayerTurn();
-      );
+    }
 
   socket.on("close", () => {
   //  console.log("Déconnexion :", player.id);
@@ -126,6 +123,7 @@ wss.on("connection", (socket) => {
 });
 
 console.log("WebSocket Server attaché !");
+
 
 
 
