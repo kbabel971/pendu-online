@@ -112,21 +112,14 @@ wss.on("connection", (socket) => {
     correct: isCorrect
   });
   players.forEach(p => p.socket.send(response));
-    broadcastWord();
+    //broadcastWord();
 
   // --- Mise à jour du tour ---
-  // Si tu utilises playerTurn comme index basé sur 1..N (1 = 1er joueur)
-  if (players.length > 0) {
-    // trouve l'index (0-based) du joueur courant dans players
-    const myIndex = players.findIndex(p => p.id === player.id);
-    // calcule l'index du prochain joueur (round-robin)
-    const nextIndex = (myIndex + 1) % players.length;
-    // si tu veux stocker playerTurn en tant qu'ID du joueur :
-    playerTurn = players[nextIndex].id;
-    // si tu préfères un index 0-based :
-    // playerTurnIndex = nextIndex;
-  }
-
+playerTurn++;
+    if(playerTurn > 2)
+    {
+      playerTurn = 1;
+    }
   // Diffuse le tour courant à tous
   broadcastPlayerTurn();
 }
@@ -152,6 +145,7 @@ wss.on("connection", (socket) => {
 });
 
 console.log("WebSocket Server attaché !");
+
 
 
 
