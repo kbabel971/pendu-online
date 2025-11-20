@@ -213,7 +213,7 @@ playerTurn++;
        // const wordCharArray = data.actuallyWordChar.split(''); // transforme en tableau de caractères
       //  console.log("Mot reçu sous forme de tableau de lettres :", wordCharArray);
    // }
-}
+});
 
   socket.on("close", () => {
    console.log("Déconnexion :", player.id);
@@ -241,4 +241,5 @@ playerTurn++;
 });
 
 console.log("WebSocket Server attaché !");
+
 
