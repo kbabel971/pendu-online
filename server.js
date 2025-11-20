@@ -133,12 +133,23 @@ wss.on("connection", (socket) => {
     });
 
   socket.on("close", () => {
-  //  console.log("Déconnexion :", player.id);
-  //  players = players.filter(p => p.id !== player.id);
-   // broadcastPlayers();
+   console.log("Déconnexion :", player.id);
+
+    // 1. On supprime le joueur
+    players = players.filter(p => p.id !== player.id);
+
+    // 2. On réindexe correctement les joueurs restants
+    players = players.map((p, index) => {
+        p.id = index + 1; // recommence à 1
+        return p;
+    });
+
+    // 3. On renvoie la nouvelle liste à tous les clients
+    broadcastPlayers();
   });
 });
 
 console.log("WebSocket Server attaché !");
+
 
 
