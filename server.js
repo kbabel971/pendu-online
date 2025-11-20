@@ -146,6 +146,11 @@ playerTurn++;
     // 1. On supprime le joueur
     players = players.filter(p => p.id !== player.id);
 
+    if(player.length === 0)
+    {
+      playerTurn = 1;
+    }
+
    // 2. RÉINDEXATION DES JOUEURS RESTANTS
     players.forEach((p, index) => {
       p.id = index + 1;
@@ -159,6 +164,7 @@ playerTurn++;
 });
 
 console.log("WebSocket Server attaché !");
+
 
 
 
