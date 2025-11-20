@@ -84,6 +84,18 @@ function broadcastPlayerTurn() {
     players.forEach(p => p.socket.send(msg));
 }
 
+let wrongLetter = [];
+
+function broadCastWrongLetter()
+{
+  const msg = JSON.stringify({
+    type: "wrong_letters",
+    letters: wrongLetter
+});
+
+players.forEach(p => p.socket.send(msg));
+}
+
 wss.on("connection", (socket) => {
    // CRÉATION DU JOUEUR AVEC UN ID BASÉ SUR LA LISTE
   const newId = players.length + 1;
@@ -142,9 +154,10 @@ wss.on("connection", (socket) => {
 
     if(isCorrect === false)
     {
+      wrongLetter.push(data.letter);
+      broadCastWrongLetter();
       broadCastImageLife();
       currentIndexImageLife++;
-       console.log("currentIndexImageLife :", currentIndexImageLife);
     }
 
   // --- Mise à jour du tour ---
@@ -182,6 +195,7 @@ playerTurn++;
 });
 
 console.log("WebSocket Server attaché !");
+
 
 
 
