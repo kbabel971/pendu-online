@@ -26,11 +26,24 @@ server.listen(PORT, () => {
   console.log("HTTP server running on port", PORT);
 });
 
+function reindexPlayers() {
+    players.forEach((p, index) => {
+        p.id = index + 1; // Joueur 1, Joueur 2, Joueur 3...
+    });
+
+    const msg = JSON.stringify({
+        type: "players",
+        players: players.map(p => p.id)
+    });
+
+    players.forEach(p => p.socket.send(msg));
+}
+
 // WebSocket
 const wss = new WebSocketServer({ server });
 
 let players = [];
-let nextId = 1;
+//let nextId = 1;
 let currentID = 0;
 let playerTurn = 1;
 
@@ -61,8 +74,10 @@ function broadcastPlayerTurn() {
 }
 
 wss.on("connection", (socket) => {
+   // CRÉATION DU JOUEUR AVEC UN ID BASÉ SUR LA LISTE
+  const newId = players.length + 1;
   const player = {
-    id: nextId++,
+    id: newId,
     socket: socket
   };
  socket.send(JSON.stringify({
@@ -131,11 +146,9 @@ playerTurn++;
     // 1. On supprime le joueur
     players = players.filter(p => p.id !== player.id);
 
-    // 2. On réindexe correctement les joueurs restants
-    players = players.map((p, index) => {
-        p.id = index + 1; // recommence à 1
-      console.log("player id :", p.id);
-        return p;
+   // 2. RÉINDEXATION DES JOUEURS RESTANTS
+    players.forEach((p, index) => {
+      p.id = index + 1;
     });
 
     // 3. On renvoie la nouvelle liste à tous les clients
@@ -146,6 +159,7 @@ playerTurn++;
 });
 
 console.log("WebSocket Server attaché !");
+
 
 
 
