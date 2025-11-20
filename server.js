@@ -96,7 +96,7 @@ function broadCastWrongLetter()
 players.forEach(p => p.socket.send(msg));
 }
 
-let life = 5;
+let life = 4;
 let lose = false;
 
 function Lose()
@@ -211,7 +211,7 @@ playerTurn++;
     {
       playerTurn = 1;
       wrongLetter.length = 0;
-      life = 5;
+      life = 4;
     }
 
    // 2. RÉINDEXATION DES JOUEURS RESTANTS
@@ -227,6 +227,7 @@ playerTurn++;
 });
 
 console.log("WebSocket Server attaché !");
+
 
 
 
