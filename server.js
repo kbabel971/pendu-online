@@ -146,10 +146,13 @@ wss.on("connection", (socket) => {
 
     // 3. On renvoie la nouvelle liste à tous les clients
     broadcastPlayers();
+   // mise a jour de l'index pour afficher le joueur connecter
+    currentID--;
   });
 });
 
 console.log("WebSocket Server attaché !");
+
 
 
 
