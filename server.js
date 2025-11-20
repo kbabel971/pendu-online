@@ -96,7 +96,7 @@ function broadCastWrongLetter()
 players.forEach(p => p.socket.send(msg));
 }
 
-let life = 4;
+let life = 5;
 let lose = false;
 
 function Lose()
@@ -156,14 +156,7 @@ wss.on("connection", (socket) => {
     console.warn("Message letter invalide ou mot non chargé.");
     return;
   }
-    // verifie si le jeu est terminer par une defaite
-    Lose();
-
-    if(lose)
-    {
-      return;
-    }
-
+   
   // Vérifie si la lettre est dans le mot
   const isCorrect = currentWord.includes(data.letter);
 
@@ -190,6 +183,9 @@ wss.on("connection", (socket) => {
       life--;
     }
 
+     // verifie si le jeu est terminer par une defaite
+    Lose();
+
   // --- Mise à jour du tour ---
 playerTurn++;
     if(playerTurn > 2)
@@ -211,7 +207,7 @@ playerTurn++;
     {
       playerTurn = 1;
       wrongLetter.length = 0;
-      life = 4;
+      life = 5;
     }
 
    // 2. RÉINDEXATION DES JOUEURS RESTANTS
@@ -227,6 +223,7 @@ playerTurn++;
 });
 
 console.log("WebSocket Server attaché !");
+
 
 
 
