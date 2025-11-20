@@ -144,6 +144,7 @@ wss.on("connection", (socket) => {
     {
       broadCastImageLife();
       currentIndexImageLife++;
+       console.log("currentIndexImageLife :", currentIndexImageLife);
     }
 
   // --- Mise à jour du tour ---
@@ -181,6 +182,7 @@ playerTurn++;
 });
 
 console.log("WebSocket Server attaché !");
+
 
 
 
