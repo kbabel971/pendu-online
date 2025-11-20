@@ -132,21 +132,30 @@ function broadCastVerifWin()
 {
   const msg = JSON.stringify({
     type: "verif_win",
+    win : win
 });
 
 players.forEach(p => p.socket.send(msg));
 }
 
-//function Win()
-//{
-//  currentWordChar = currentWord.split('');
-//  let nbLetterFind;
+function Win()
+{
+  if (!actuallyWordChar.includes('_')) 
+  {
+        win = true;
+    }
 
- // for(let i = 0; i < currentWordChar.length ; i++)
- // {
-    
- // }
-//}
+  if(win)
+  {
+    const msg = JSON.stringify({
+    type: "verif_win",
+});
+
+   players.forEach(p => p.socket.send(msg));
+}
+  }
+  
+}
 
 wss.on("connection", (socket) => {
    // CRÉATION DU JOUEUR AVEC UN ID BASÉ SUR LA LISTE
@@ -184,7 +193,7 @@ wss.on("connection", (socket) => {
 
     const data = JSON.parse(msg.toString());
 
-  if (data.type === "letter" && !lose) {
+  if (data.type === "letter" && !lose && !win) {
   console.log(`Joueur ${player.id} a envoyé la lettre : ${data.letter}`);
 
   // Vérifs basiques
@@ -224,7 +233,8 @@ wss.on("connection", (socket) => {
       life--;
     }
 
-    broadCastVerifWin();
+
+    Win();
      // verifie si le jeu est terminer par une defaite
     Lose();
 
@@ -270,6 +280,7 @@ playerTurn++;
 });
 
 console.log("WebSocket Server attaché !");
+
 
 
 
