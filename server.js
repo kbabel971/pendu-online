@@ -129,6 +129,7 @@ wss.on("connection", (socket) => {
   // Diffuse le tour courant à tous
   broadcastPlayerTurn();
 }
+    )};
 
   socket.on("close", () => {
   //  console.log("Déconnexion :", player.id);
@@ -138,21 +139,3 @@ wss.on("connection", (socket) => {
 });
 
 console.log("WebSocket Server attaché !");
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
