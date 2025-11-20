@@ -92,28 +92,43 @@ wss.on("connection", (socket) => {
 
     const data = JSON.parse(msg.toString());
 
-    if (data.type === "letter") {
-        console.log(`Joueur ${player.id} a envoyé la lettre : ${data.letter}`);
+  if (data.type === "letter") {
+  console.log(`Joueur ${player.id} a envoyé la lettre : ${data.letter}`);
 
-        // Vérifie si la lettre est dans le mot
-        let isCorrect = currentWord.includes(data.letter);
+  // Vérifs basiques
+  if (!currentWord || typeof data.letter !== "string" || data.letter.length === 0) {
+    console.warn("Message letter invalide ou mot non chargé.");
+    return;
+  }
 
-        // Envoie la lettre à tous les joueurs
-        const response = JSON.stringify({
-            type: "letter_result",
-            player: player.id,
-            letter: data.letter,
-            correct: isCorrect
-        });
+  // Vérifie si la lettre est dans le mot
+  const isCorrect = currentWord.includes(data.letter);
 
-        players.forEach(p => p.socket.send(response));
-       playerTurn++;
-      if(playerTurn > 2)
-      { playerTurn = 1;
-    }
+  // Envoie le résultat de la lettre à tous les joueurs
+  const response = JSON.stringify({
+    type: "letter_result",
+    player: player.id,
+    letter: data.letter,
+    correct: isCorrect
+  });
+  players.forEach(p => p.socket.send(response));
 
-      broadcastPlayerTurn();
-    }
+  // --- Mise à jour du tour ---
+  // Si tu utilises playerTurn comme index basé sur 1..N (1 = 1er joueur)
+  if (players.length > 0) {
+    // trouve l'index (0-based) du joueur courant dans players
+    const myIndex = players.findIndex(p => p.id === player.id);
+    // calcule l'index du prochain joueur (round-robin)
+    const nextIndex = (myIndex + 1) % players.length;
+    // si tu veux stocker playerTurn en tant qu'ID du joueur :
+    playerTurn = players[nextIndex].id;
+    // si tu préfères un index 0-based :
+    // playerTurnIndex = nextIndex;
+  }
+
+  // Diffuse le tour courant à tous
+  broadcastPlayerTurn();
+}
 
   socket.on("close", () => {
   //  console.log("Déconnexion :", player.id);
@@ -123,6 +138,7 @@ wss.on("connection", (socket) => {
 });
 
 console.log("WebSocket Server attaché !");
+
 
 
 
