@@ -116,16 +116,16 @@ let win = false;
 let currentWordChar = [];
 let actuallyWordChar = [];
 
-function Win()
-{
-  currentWordChar = currentWord.split('');
-  let nbLetterFind;
+//function Win()
+//{
+//  currentWordChar = currentWord.split('');
+//  let nbLetterFind;
 
-  for(let i = 0; i < currentWordChar.length ; i++)
-  {
+ // for(let i = 0; i < currentWordChar.length ; i++)
+ // {
     
-  }
-}
+ // }
+//}
 
 wss.on("connection", (socket) => {
    // CRÉATION DU JOUEUR AVEC UN ID BASÉ SUR LA LISTE
@@ -213,6 +213,7 @@ playerTurn++;
         const wordCharArray = data.actuallyWordChar.split(''); // transforme en tableau de caractères
         console.log("Mot reçu sous forme de tableau de lettres :", wordCharArray);
     });
+}
 
   socket.on("close", () => {
    console.log("Déconnexion :", player.id);
@@ -240,6 +241,7 @@ playerTurn++;
 });
 
 console.log("WebSocket Server attaché !");
+
 
 
 
