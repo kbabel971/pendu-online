@@ -119,6 +119,7 @@ let currentWordChar = [];
 
 function LetterIsInWord(playerLetter)
 {
+    console.log("lettre correcte");
   for(let i = 1 ; i < currentWordChar.length ; i++)
   {
     console.log(currentWordChar[i]);
@@ -211,7 +212,7 @@ wss.on("connection", (socket) => {
 
     if(isCorrect)
     {
-      console.log("lettre correcte");
+    
       LetterIsInWord(data.letter);
     }
 
@@ -285,6 +286,7 @@ playerTurn++;
 });
 
 console.log("WebSocket Server attaché !");
+
 
 
 
