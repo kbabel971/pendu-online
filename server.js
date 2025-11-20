@@ -112,6 +112,7 @@ wss.on("connection", (socket) => {
     correct: isCorrect
   });
   players.forEach(p => p.socket.send(response));
+    broadcastWord();
 
   // --- Mise à jour du tour ---
   // Si tu utilises playerTurn comme index basé sur 1..N (1 = 1er joueur)
@@ -139,4 +140,5 @@ wss.on("connection", (socket) => {
 });
 
 console.log("WebSocket Server attaché !");
+
 
