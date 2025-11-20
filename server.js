@@ -146,7 +146,7 @@ playerTurn++;
     // 1. On supprime le joueur
     players = players.filter(p => p.id !== player.id);
 
-    if(player.length === 0)
+    if(players.length === 0)
     {
       playerTurn = 1;
     }
@@ -164,6 +164,7 @@ playerTurn++;
 });
 
 console.log("WebSocket Server attaché !");
+
 
 
 
