@@ -47,6 +47,17 @@ let players = [];
 let currentID = 0;
 let playerTurn = 1;
 
+let currentIndexImageLife = 0;
+
+function broadCastImageLife()
+{
+   const msg = JSON.stringify({
+    type: "Image_Life",
+    currentImageLife: currentIndexImageLife
+  });
+  players.forEach(p => p.socket.send(msg));
+}
+
 function broadcastPlayers() {
   const ids = players.map(p => p.id);
   const msg = JSON.stringify({
@@ -129,6 +140,12 @@ wss.on("connection", (socket) => {
   players.forEach(p => p.socket.send(response));
     //broadcastWord();
 
+    if(isCorrect === false)
+    {
+      broadCastImageLife();
+      currentIndexImageLife++;
+    }
+
   // --- Mise à jour du tour ---
 playerTurn++;
     if(playerTurn > 2)
@@ -164,6 +181,7 @@ playerTurn++;
 });
 
 console.log("WebSocket Server attaché !");
+
 
 
 
