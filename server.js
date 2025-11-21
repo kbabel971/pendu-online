@@ -112,7 +112,7 @@ function Lose()
 });
     players.forEach(p => p.socket.send(msg));
 
-    ReloadGame();
+    TimerNextGame();
   }
 }
 
@@ -147,7 +147,7 @@ function Win()
   if (!actuallyWordChar.includes('_')) 
   {
         win = true;
-    ReloadGame();
+    TimerNextGame();
     }
 
   if(win)
@@ -160,6 +160,28 @@ function Win()
    players.forEach(p => p.socket.send(msg));
 }
   }
+
+let timer = 5;
+let timerInterval = null;
+
+function TimerNextGame()
+{
+  timer = 5; // reset du timer
+  
+  timerInterval = setInterval(() => {
+        timer--;
+
+        console.log("Timer:", timer);
+
+    if(timer <= 0)
+    {
+      console.log("Timer terminé !");
+      clearInterval(timerInterval);
+      ReloadGame();
+    }
+}, 1000);
+                              }
+
 let reload = false;
 
 function ReloadGame()
@@ -307,6 +329,7 @@ playerTurn++;
 });
 
 console.log("WebSocket Server attaché !");
+
 
 
 
