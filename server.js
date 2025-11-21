@@ -65,6 +65,7 @@ function broadcastPlayers() {
   const msg = JSON.stringify({
     type: "players",
     players: ids,
+    id : player.id
   });
   players.forEach(p => p.socket.send(msg));
 
@@ -345,6 +346,7 @@ playerTurn++;
 });
 
 console.log("WebSocket Server attaché !");
+
 
 
 
