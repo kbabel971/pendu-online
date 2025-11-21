@@ -172,6 +172,11 @@ function ReloadGame()
   wrongLetter = [];
   currentIndexImageLife = 0;
 
+    const msg = JSON.stringify({
+    type: "reload_game",
+});
+   players.forEach(p => p.socket.send(msg));
+
   broadcastWord();
   broadCastWrongLetter();
 }
@@ -300,6 +305,7 @@ playerTurn++;
 });
 
 console.log("WebSocket Server attaché !");
+
 
 
 
