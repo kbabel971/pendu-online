@@ -35,7 +35,6 @@ function reindexPlayers() {
     const msg = JSON.stringify({
         type: "players",
         players: players.map(p => p.id),
-        id : player.id
     });
 
     players.forEach(p => p.socket.send(msg));
@@ -62,10 +61,11 @@ function broadCastImageLife()
 
 function broadcastPlayers() {
   const ids = players.map(p => p.id);
+  const playersList = players.map((p, idx) => ({ id: p.id, position: idx + 1 }));
   const msg = JSON.stringify({
     type: "players",
     players: ids,
-    id : player.id
+    playersIdList : playersList
   });
   players.forEach(p => p.socket.send(msg));
 
@@ -346,6 +346,7 @@ playerTurn++;
 });
 
 console.log("WebSocket Server attaché !");
+
 
 
 
