@@ -302,7 +302,7 @@ wss.on("connection", (socket) => {
 
   // --- Mise à jour du tour ---
 playerTurn++;
-    if(playerTurn > 2)
+    if(playerTurn > players.length)
     {
       playerTurn = 1;
     }
@@ -342,6 +342,7 @@ playerTurn++;
 });
 
 console.log("WebSocket Server attaché !");
+
 
 
 
