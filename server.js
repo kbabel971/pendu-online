@@ -161,6 +161,23 @@ function Win()
    players.forEach(p => p.socket.send(msg));
 }
   }
+let reload = false;
+
+function ReloadGame()
+{
+  reload = true;
+   currentWord = getRandomWord();
+    actuallyWordChar = Array(currentWord.length).fill('_');
+    actuallyWordChar[0] = currentWord[0]; // première lettre toujours affichée
+    win = false;
+    lose = false;
+    life = 5;
+  wrongLetter = [];
+  currentIndexImageLife = 0;
+
+  broadcastWord();
+  broadCastWrongLetter();
+}
 
 wss.on("connection", (socket) => {
    // CRÉATION DU JOUEUR AVEC UN ID BASÉ SUR LA LISTE
@@ -286,6 +303,7 @@ playerTurn++;
 });
 
 console.log("WebSocket Server attaché !");
+
 
 
 
