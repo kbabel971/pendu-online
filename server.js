@@ -333,6 +333,13 @@ playerTurn++;
     // 1. On supprime le joueur
     players = players.filter(p => p.id !== player.id);
 
+    // 2. Réinitialise tous les scores
+    players.forEach(p => p.score = 0);
+
+    broadcastScores();
+    // 7. Mise à jour globale des joueurs
+    broadcastPlayers();
+
     if(players.length === 0)
     {
       playerTurn = 1;
@@ -357,6 +364,7 @@ playerTurn++;
 });
 
 console.log("WebSocket Server attaché !");
+
 
 
 
