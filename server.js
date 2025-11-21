@@ -34,7 +34,8 @@ function reindexPlayers() {
 
     const msg = JSON.stringify({
         type: "players",
-        players: players.map(p => p.id)
+        players: players.map(p => p.id),
+        id : player.id
     });
 
     players.forEach(p => p.socket.send(msg));
@@ -344,6 +345,7 @@ playerTurn++;
 });
 
 console.log("WebSocket Server attaché !");
+
 
 
 
