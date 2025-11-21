@@ -146,7 +146,9 @@ function Win()
 {
   if (!actuallyWordChar.includes('_')) 
   {
-        win = true;
+    win = true;
+    players[playerTurn - 1].score += 5;
+    broadcastScores();
     TimerNextGame();
     }
 
@@ -205,12 +207,22 @@ function ReloadGame()
   broadCastWrongLetter();
 }
 
+function broadcastScores() {
+  const msg = JSON.stringify({
+      type: "scores",
+      scores: players.map(p => ({ id: p.id, score: p.score }))
+  });
+
+  players.forEach(p => p.socket.send(msg));
+}
+
 wss.on("connection", (socket) => {
    // CRÉATION DU JOUEUR AVEC UN ID BASÉ SUR LA LISTE
   const newId = players.length + 1;
   const player = {
     id: newId,
-    socket: socket
+    socket: socket,
+    score : 0
   };
  socket.send(JSON.stringify({
     type: "current_id",
@@ -255,8 +267,9 @@ wss.on("connection", (socket) => {
 
     if(isCorrect)
     {
-    
       LetterIsInWord(data.letter);
+      player.score += 1;
+      broadcastScores();
     }
 
   // Envoie le résultat de la lettre à tous les joueurs
@@ -329,6 +342,7 @@ playerTurn++;
 });
 
 console.log("WebSocket Server attaché !");
+
 
 
 
