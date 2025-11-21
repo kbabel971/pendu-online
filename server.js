@@ -66,6 +66,8 @@ function broadcastPlayers() {
     players: ids
   });
   players.forEach(p => p.socket.send(msg));
+
+  broadcastScores();
 }
 
 function broadcastWord() {
@@ -342,6 +344,7 @@ playerTurn++;
 });
 
 console.log("WebSocket Server attaché !");
+
 
 
 
