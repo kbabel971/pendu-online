@@ -233,6 +233,13 @@ wss.on("connection", (socket) => {
     id: currentID
 }));
   players.push(player);
+  
+  // Envoyer uniquement l'ID / position de ce joueur
+    socket.send(JSON.stringify({
+        type: "current_player_position",
+        position: player.id  // ou la position dans la liste
+    }));
+  
   currentID++;
   console.log("Nouveau joueur :", player.id);
   
@@ -333,19 +340,24 @@ playerTurn++;
       life = 5;
     }
 
-   // 2. RÉINDEXATION DES JOUEURS RESTANTS
-    players.forEach((p, index) => {
-      p.id = index + 1;
+    // Réindexer les positions
+    players.forEach((p, idx) => p.id = idx + 1);
+    
+   // Envoyer la nouvelle position à chaque joueur restant
+    players.forEach(p => {
+        p.socket.send(JSON.stringify({
+            type: "current_player_position",
+            position: p.id
+        }));
     });
-
-    // 3. On renvoie la nouvelle liste à tous les clients
-    broadcastPlayers();
+    
    // mise a jour de l'index pour afficher le joueur connecter
     currentID--;
   });
 });
 
 console.log("WebSocket Server attaché !");
+
 
 
 
