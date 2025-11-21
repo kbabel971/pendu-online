@@ -111,6 +111,8 @@ function Lose()
     lose: lose
 });
     players.forEach(p => p.socket.send(msg));
+
+    ReloadGame();
   }
 }
 
@@ -305,6 +307,7 @@ playerTurn++;
 });
 
 console.log("WebSocket Server attaché !");
+
 
 
 
